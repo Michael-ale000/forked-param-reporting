@@ -1,1 +1,4 @@
 venv/
+# macOS Finder metadata
+.DS_Store
+._*
