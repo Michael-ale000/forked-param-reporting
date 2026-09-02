@@ -1,0 +1,729 @@
+---
+params:
+  Name: "LOUISIANA ICE PROCESSING" 
+  Longitude: -91.56805267
+  Latitude: 30.94074023
+title: "`r params$Name`"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-location: left
+    code-fold: true
+    embed-resources: true
+    page-layout: full
+    includes:
+      in-header: |
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0JF41VY73"></script>
+        <script>
+          // Get the full path after the domain
+          let pagePath = window.location.pathname;
+          
+          // Remove .html extension if present
+          pagePath = pagePath.replace(/\.html$/, "");
+          
+          // Extract just the facility name from the path
+          // e.g., "/facility/ADAMS_COUNTY_DET_CENTER" → "ADAMS_COUNTY_DET_CENTER"
+          let facilityName = pagePath.split("/").pop();
+        
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-Y0JF41VY73', {
+            `page_path`: pagePath 
+          });
+          
+          
+          // Log a custom GA event for facility views
+          gtag('event', 'view_facility', {
+            facility_name: facilityName
+          });
+        </script>
+    css: |
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .header-section {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 3rem 2rem;
+        margin: -1rem -1rem 3rem -1rem;
+        border-radius: 0 0 15px 15px;
+        text-align: center;
+        position: relative;
+        overflow: visible;
+        min-height: 200px;
+      }
+      .header-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        margin-top: 1rem;
+      }
+      .header-section h3 {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+      }
+      .header-section p {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+      .logo-top-right {
+        display: none !important;
+      }
+      .stats-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin: 3rem 0;
+      }
+      .chart-container {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+      .insights-box {
+        background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+        border-left: 5px solid #3498db;
+        padding: 2rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+      }
+      .news-section {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 3rem;
+        border-left: 4px solid #28a745;
+      }
+      .facility-table {
+        width: 100%;
+        margin: 2rem auto;
+        max-width: 800px;
+      }
+      .map-container {
+        text-align: center;
+        margin: 2rem 0;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+      .map-container iframe {
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 800px;
+      }
+      .map-container p {
+        margin-top: 1rem;
+        font-style: italic;
+        color: #666;
+        text-align: center;
+        font-size: 0.9em;
+      }
+      h2 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 0.5rem;
+        margin-top: 3rem;
+      }
+      .section-spacing {
+        margin: 3rem 0;
+      }
+      
+      /* Sidebar styling for TOC */
+      .sidebar {
+        position: relative;
+      }
+      
+      /* Button hover effects */
+      a[style*="background: #3498db"]:hover {
+        background: #2980b9 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+      
+      a[style*="background: #27ae60"]:hover {
+        background: #229954 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+      }
+      
+      /* Responsive design for buttons */
+      @media (max-width: 768px) {
+        div[style*="display: flex"][style*="gap: 1rem"] {
+          flex-direction: column !important;
+          align-items: center !important;
+        }
+        
+        div[style*="display: flex"][style*="gap: 1rem"] a {
+          width: 200px !important;
+          text-align: center !important;
+        }
+      }
+execute:
+  echo: false
+  warning: false
+  message: false
+project:
+  output-dir: "outputs"
+---
+
+```{=html}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait for TOC to be rendered
+  setTimeout(function() {
+    // Find the sidebar or TOC container
+    const sidebar = document.querySelector('.sidebar') ||
+                    document.querySelector('#TOC') ||
+                    document.querySelector('nav[role="doc-toc"]') ||
+                    document.querySelector('.toc-content');
+    
+    if (sidebar) {
+      // Create logo container
+      const logoDiv = document.createElement('div');
+      logoDiv.style.cssText = `
+        text-align: center; 
+        padding: 1rem; 
+        border-bottom: 1px solid #e0e0e0; 
+        margin-bottom: 1rem;
+      `;
+      
+      // Create logo image
+      const logoImg = document.createElement('img');
+      logoImg.src = 'Relevant_Research_HZ_Color.png';
+      logoImg.alt = 'Relevant Research Logo';
+      logoImg.style.cssText = `
+        height: 80px; 
+        max-width: 180px; 
+        object-fit: contain;
+      `;
+      
+      // Add error handling for debugging
+      logoImg.onerror = function() {
+        console.log('Logo failed to load. Check if Relevant_Research_HZ_Color.png exists in project directory.');
+        // Create fallback text if image fails
+        const fallbackText = document.createElement('div');
+        fallbackText.innerHTML = '<strong style="color: #2c3e50;">RELEVANT RESEARCH</strong>';
+        fallbackText.style.cssText = `
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+        `;
+        logoDiv.replaceChild(fallbackText, logoImg);
+      };
+      
+      logoImg.onload = function() {
+        console.log('Logo loaded successfully!');
+      };
+      
+      logoDiv.appendChild(logoImg);
+      
+      // Insert at the beginning of sidebar
+      sidebar.insertBefore(logoDiv, sidebar.firstChild);
+    }
+  }, 500);
+});
+</script>
+```
+```{r setup, include=FALSE}
+library(ggplot2)
+library(stringr)
+library(dplyr)
+library(tidyr)
+library(janitor)
+library(openxlsx)
+library(scales)
+library(patchwork)
+library(lorem)
+library(knitr)
+library(DT)
+library(leaflet)
+```
+
+```{r data-loading, include=TRUE}
+# Load interval ADP data - This replaces the Excel-based reported ADP calculations
+interval_df <- openxlsx::read.xlsx("IntervalAdpForIndividualColumn_2025-11-28_v1.xlsx",sheet = 1)
+
+# Filter for the specific facility using interval ADP data
+facility_interval <- interval_df |>
+  filter(Name == str_to_title(params$Name)) |>
+  filter(row_number()<2)#|> #Northwest State Correctional in Vermont plus GITMO
+  #filter(State == "NY") #Clinton County: NY/IN
+
+detloc <- "LICEPLA"
+
+# Load location data for mapping
+fy25_fac_locations <- read.csv("./fy26_detention_output_2025-11-22.csv")
+coords <- fy25_fac_locations |>
+  filter(Name == params$Name) #|>
+  #filter(State == "NY") #Clinton County: NY/IN
+
+# Load facility details from Excel for address and metadata
+excel_path <- "FY26_detentionStats12032025.xlsx"
+df <- openxlsx::read.xlsx(excel_path, sheet  = "Facilities FY26")
+
+# Get facility metadata from Excel
+facility_meta <- df |>
+  row_to_names(row_number = 6) |>
+  clean_names() |>
+  filter(name == params$Name) |>
+  filter(row_number()<2)#|> # Prevent duplicates
+  #filter(state == "NY") #Clinton County: NY/IN
+
+
+# Extract location information
+City <- facility_meta |> select(c(city))
+name <- str_to_title(facility_interval$Name)
+Address <- facility_meta |> select(c(address)) |> pull()
+State <- facility_meta |> select(c(state)) |> pull()
+Zip <- facility_meta |> select(c(zip)) |> pull()
+AOR <- facility_meta |> select(c(aor)) |> pull()
+
+# Create dynamic location links
+dynamic_address <- paste0(
+  str_replace_all(Address, " ", "+"), "+",
+  str_replace_all(City, " ", "+"), "+",
+  State, "+",
+  Zip)
+
+
+# Create safe dynamic HTML with error handling
+safe_dynamic_html <- if(nrow(coords) > 0 && !is.na(params$Longitude) && !is.na(params$Latitude)) {
+  paste0('<div style="background: #f8f9fa;
+             border-radius: 10px;
+             text-align: center;
+             margin: 1rem 0;
+             border: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            padding: 1rem;">
+  <div style="display: flex;
+               gap: 1rem;
+               justify-content: center;
+               flex-wrap: wrap;
+               margin: 0;">
+    <a href="https://maps.google.com/maps?q=', params$Latitude, ',', params$Longitude, '"
+       target="_blank"
+       style="background: #3498db;
+               color: white;
+               padding: 0.75rem 1.5rem;
+               text-decoration: none;
+               border-radius: 5px;
+               display: inline-block;
+               font-weight: bold;
+               transition: all 0.3s ease;">
+      🗺️ View Interactive Map
+    </a>
+    <a href="https://www.google.com/maps/dir//', params$Latitude, ',', params$Longitude, '"
+       target="_blank"
+       style="background: #27ae60;
+               color: white;
+               padding: 0.75rem 1.5rem;
+               text-decoration: none;
+               border-radius: 5px;
+               display: inline-block;
+               font-weight: bold;
+               transition: all 0.3s ease;">
+      🧭 Get Directions
+    </a>
+  </div>
+</div>')
+} else if(!is.na(Address) && !is.na(City$city) && !is.na(State)) {
+  paste0('<div style="background: #f8f9fa;
+             border-radius: 10px;
+             text-align: center;
+             margin: 1rem 0;
+             border: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            padding: 1rem;">
+  <div style="display: flex;
+               gap: 1rem;
+               justify-content: center;
+               flex-wrap: wrap;
+               margin: 0;">
+    <a href="https://maps.google.com/maps?q=', dynamic_address, '"
+       target="_blank"
+       style="background: #3498db;
+               color: white;
+               padding: 0.75rem 1.5rem;
+               text-decoration: none;
+               border-radius: 5px;
+               display: inline-block;
+               font-weight: bold;
+               transition: all 0.3s ease;">
+      🗺️ View Interactive Map
+    </a>
+    <a href="https://www.google.com/maps/dir//', dynamic_address, '"
+       target="_blank"
+       style="background: #27ae60;
+               color: white;
+               padding: 0.75rem 1.5rem;
+               text-decoration: none;
+               border-radius: 5px;
+               display: inline-block;
+               font-weight: bold;
+               transition: all 0.3s ease;">
+      🧭 Get Directions
+    </a>
+  </div>
+</div>')
+} else {
+  '<div style="background: #f8f9fa; border-radius: 10px; text-align: center; margin: 1rem 0; padding: 1rem;">
+    <p style="color: #666;">Location information not available for this facility.</p>
+   </div>'
+}
+
+# Updated image path to relative
+image <- paste0("./interval/", detloc, "_final_plt_2025-12-22.png")
+image2 <- paste0("./scatter/", detloc, "_final_2025-12-22.png")
+```
+
+::: header-section
+# ICE Detention Facility Statistical Report
+
+*Data as of December 11, 2025 - Using Interval ADP Calculations*
+
+[*Back to Detention Reports*](https://detentionreports.com/)
+:::
+
+```{r data-preparation, include=FALSE}
+# Clean and prepare interval ADP data
+facility_clean <- facility_interval |>
+  mutate(
+    # Use interval ADP columns instead of cumulative
+    level_a = round(as.numeric(level_A_back_interval_adp),0),
+    level_b = round(as.numeric(level_B_back_interval_adp),0),
+    level_c = round(as.numeric(level_C_back_interval_adp),0),
+    level_d = round(as.numeric(level_D_back_interval_adp),0),
+    male_crim = as.numeric(MaleCrim_back_interval_adp),
+    male_non_crim = as.numeric(MaleNonCrim_back_interval_adp),
+    female_crim = as.numeric(FemaleCrim_back_interval_adp),
+    female_non_crim = as.numeric(FemaleNonCrim_back_interval_adp),
+    total_beds = as.numeric(beds_back_interval_adp))
+  # ) |>
+  # mutate(level_a = ifelse(total_beds < 15, NA, level_a),
+  #        level_b = ifelse(total_beds < 15, NA, level_b),
+  #        level_c = ifelse(total_beds < 15, NA, level_c),
+  #        level_d = ifelse(total_beds < 15, NA, level_d),
+  #        male_crim = ifelse(total_beds < 15, NA, male_crim),
+  #        male_non_crim = ifelse(total_beds < 15, NA, male_non_crim),
+  #        female_crim = ifelse(total_beds < 15, NA, female_crim),
+  #        female_non_crim = ifelse(total_beds < 15, NA, female_non_crim))
+
+  # Classification data with proper ordering - using interval ADP
+class_data <- facility_clean |>
+  select(Name, level_a, level_b, level_c, level_d) |>
+  pivot_longer(cols = c(level_a, level_b, level_c, level_d),
+               names_to = "Classification",
+               values_to = "Population") |>
+  mutate(Classification = case_when(
+    Classification == "level_a" ~ "Level A",
+    Classification == "level_b" ~ "Level B",
+    Classification == "level_c" ~ "Level C",
+    Classification == "level_d" ~ "Level D"
+  )) |>
+  filter(Population > 0) |>
+  # Add factor ordering to ensure A, B, C, D sequence
+  mutate(Classification = factor(Classification, levels = c("Level A", "Level B", "Level C", "Level D")))
+
+# Criminal status data with updated labels - using interval ADP
+status_data <- facility_clean |>
+  summarise(
+    `Male – Criminal` = round(male_crim,0),
+    `Male – Non-Criminal` = round(male_non_crim,0),
+    `Female – Criminal` = round(female_crim,0),
+    `Female – Non-Criminal` = round(female_non_crim,0)
+  ) |>
+  pivot_longer(everything(),
+               names_to = "Category",
+               values_to = "Count") |>
+  filter(Count > 0)
+
+# Convert necessary columns to numeric and handle missing values
+facility_meta_clean <- facility_meta |>
+  mutate(
+    fy26_alos = as.numeric(fy26_alos),
+    guaranteed_minimum = as.numeric(guaranteed_minimum)
+  )
+
+# Handle potential missing values
+alos_value <- if(is.na(facility_meta_clean$fy26_alos)) {
+  "Not Available"
+} else {
+  paste0(round(facility_meta_clean$fy26_alos, 0), " days")
+}
+
+guaranteed_min_value <- if(is.na(facility_meta_clean$guaranteed_minimum)) {
+  "Not Available"
+} else {
+  as.character(facility_meta_clean$guaranteed_minimum)
+}
+
+# Summary statistics using interval ADP data
+facility_summary <- data.frame(
+  Metric = c(
+    "Address",
+    "Total Average Daily Population (Interval ADP)",
+    "Average Length of Stay",
+    "Male Population",
+    "Female Population", 
+    "Criminal Population",
+    "Non-Criminal Population",
+    "Facility Type",
+    "Area of Responsibility",
+    "Guaranteed Minimum"
+  ),
+  Value = c(
+    paste0(str_to_title(Address), ", ", str_to_title(City$city), ", ", State, " ", Zip),
+    format(round(facility_clean$total_beds, 0), big.mark = ","),
+    alos_value,
+    format(round(sum(facility_clean$male_crim, facility_clean$male_non_crim, na.rm = TRUE), 0), big.mark = ","), 
+    format(round(sum(facility_clean$female_crim, facility_clean$female_non_crim, na.rm = TRUE), 0), big.mark = ","), 
+    format(round(sum(facility_clean$male_crim, facility_clean$female_crim, na.rm = TRUE), 0), big.mark = ","), 
+    format(round(sum(facility_clean$male_non_crim, facility_clean$female_non_crim, na.rm = TRUE), 0), big.mark = ","),
+    ifelse(is.na(facility_meta_clean$type_detailed), "Not Available", str_to_upper(facility_meta_clean$type_detailed)),
+    ifelse(is.na(facility_meta_clean$aor), "Not Available", facility_meta_clean$aor),
+    guaranteed_min_value
+  ))
+```
+
+## Key Statistics
+
+```{r summary-table}
+kable(facility_summary,
+      col.names = c("Facility Metric", "Value"),
+      escape = FALSE,
+      align = c("l", "r")) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center",
+    font_size = 14,
+    latex_options = "scale_down"
+  ) |>
+  kableExtra::column_spec(1, bold = TRUE) |>
+  kableExtra::column_spec(2) |>
+  kableExtra::row_spec(0, bold = TRUE, background = "#f8f9fa")
+```
+
+## Facility Location
+
+::: map-container
+```{r facility-map, echo=FALSE, fig.height=4}
+# Create interactive map with custom styling
+facility_map <- leaflet(width = "100%", height = "400px") %>%
+  addTiles() %>%
+  setView(lng = params$Longitude, lat = params$Latitude, zoom = 10) %>%
+  addMarkers(
+    lng = params$Longitude, 
+    lat = params$Latitude,
+    popup = paste0(
+      "<div style='text-align: center; font-family: Arial, sans-serif;'>",
+      "<h4 style='margin: 5px 0; color: #2c3e50;'>", facility_meta$name, "</h4>",
+      "<p style='margin: 5px 0;'><strong>", Address, "</strong></p>",
+      "<p style='margin: 5px 0;'>", City$city, ", ", State, " ", Zip, "</p>",
+      "<p style='margin: 5px 0; color: #666;'>", State, "</p>",
+      "</div>"
+    ),
+    label = str_to_title(params$Name)
+  )
+
+# Display the map
+facility_map
+```
+
+```{=html}
+`r safe_dynamic_html`
+```
+<p style="margin-top: 1rem; font-style: italic; color: #666; text-align: center;">
+
+</p>
+:::
+
+## Interval Average Daily Population (Interval ADP)
+
+This is a backward moving average calculation of facility populations based on ICE data. For more information, see the background paper [here](https://relevant-research.com/work).
+
+![](`r image`)
+
+## Average Length of Stay and Interval ADP Scatter Plot
+
+![](`r image2`)
+
+::: chart-container
+## Interval ADP by Detainee Classification
+
+```{r classification-plot, fig.width=8, fig.height=6}
+# Enhanced theme for charts
+chart_theme <- theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5, margin = margin(b = 20)),
+    plot.subtitle = element_text(size = 12, hjust = 0.5, margin = margin(b = 15)),
+    axis.title = element_text(size = 12, face = "bold"),
+    axis.text = element_text(size = 11),
+    legend.title = element_text(size = 11, face = "bold"),
+    legend.text = element_text(size = 10),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.margin = margin(15, 15, 15, 15)
+  )
+
+# Classification bar chart with ordered x-axis (A, B, C, D)
+ggplot(class_data, aes(x = Classification, y = Population, fill = Classification)) +
+  geom_col(width = 0.7, alpha = 0.85) +
+  geom_text(aes(label = paste0(round(Population, 1))),
+            vjust = -0.5,
+            size = 4,
+            fontface = "bold",
+           color = "#2c3e50") +
+  scale_y_continuous(
+    labels = comma_format(),
+    limits = c(0, max(class_data$Population) * 1.15),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  scale_fill_manual(values = c("Level A" = "#006475", "Level B" = "#00a1b7", 
+                               "Level C" = "#616571", "Level D" = "#9DA7BF")) +
+  labs(
+    title = "Detainee Classification Distribution",
+    subtitle = "Population by Security Level",
+    x = "Detainee Classification",
+    y = "Average Daily Population"
+  ) +
+  chart_theme +
+  theme(legend.position = "none")
+```
+
+ICE defines these classifications as follows:
+
+*Upon admission and periodically thereafter, detainees are categorized into a security level based on a variety of public safety factors, and are housed accordingly.*
+
+*Factors include prior convictions, threat risk, disciplinary record, special vulnerabilities, and special management concerns.*
+
+*Detainees are categorized into one of four classes of security risk:*
+
+-   *A/low*
+-   *B/medium low*
+-   *C/medium high*
+-   *D/high*
+
+\*Due to rounding, summing the Security Classification totals may not equal the facility's aggregate Interval ADP. Please refer to the [notes](https://detentionreports.com/notes.html) page for more information.
+:::
+
+## Interval ADP by Gender and Criminal Status
+
+::: chart-container
+```{r status-plot, fig.width=8, fig.height=6}
+# Status distribution donut chart with smart labeling
+# Prepare data with cumulative positions for label placement
+status_data_labeled <- status_data %>%
+  mutate(
+    percentage = Count / sum(Count) * 100,
+    # Create labels for all segments
+    label_text = paste0(round(percentage, 1), "%\n(", round(Count, 1), ")"),
+    # Position labels: large segments inside, small segments in legend with detailed info
+    position_type = ifelse(percentage > 10, "inside", "outside")
+  )
+
+# Create a more detailed legend that includes the counts
+legend_labels <- status_data %>%
+  mutate(percentage = Count / sum(Count) * 100) %>%
+  arrange(desc(Count)) %>%
+  mutate(
+    detailed_label = paste0(Category, ": ", round(percentage, 1), "% (", round(Count, 1), ")")
+  ) %>%
+  pull(detailed_label)
+
+# Create the plot
+p <- ggplot(status_data, aes(x = 2, y = Count, fill = Category)) +
+  geom_bar(stat = "identity", width = 1, alpha = 0.85) +
+  coord_polar("y", start = 0) +
+  scale_fill_manual(
+    values = c("Female – Criminal" = "#006475", 
+               "Female – Non-Criminal" = "#00a1b7", 
+               "Male – Criminal" = "#616571", 
+               "Male – Non-Criminal" = "#9DA7BF"),
+    labels = function(x) {
+      # Create detailed labels for legend
+      sapply(x, function(cat) {
+        row_data <- status_data[status_data$Category == cat, ]
+        if(nrow(row_data) > 0) {
+          pct <- round(row_data$Count / sum(status_data$Count) * 100, 1)
+          paste0(cat, ": ", pct, "% (", round(row_data$Count, 1), ")")
+        } else {
+          cat
+        }
+      })
+    }
+  ) +
+  # Only label the largest segment to avoid collision
+  geom_text(
+    data = status_data %>%
+            mutate(percentage = Count / sum(Count) * 100) %>%
+           filter(percentage > 10),
+    aes(label = paste0(round(Count/sum(status_data$Count)*100, 1), "%\n(", round(Count, 1), ")")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5,
+    fontface = "bold",
+    color = "white"
+  ) +
+  xlim(0.5, 2.5) +
+  labs(
+    title = "Population by Gender and Criminal Status",
+    subtitle = "Percentage (Approximate Pop.)"
+  ) +
+  chart_theme +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    legend.margin = margin(t = 15),
+    legend.box.margin = margin(t = 10),
+    legend.text = element_text(size = 10)
+  ) +
+  guides(fill = guide_legend(ncol = 2))
+
+p
+```
+
+ICE defines criminality as follows:
+
+-   *Convicted Criminal:*
+    -   *Immigration Violators with a criminal conviction entered into ICE systems of record at the time of ICE custody.*\
+-   *Pending Criminal Charges:*
+    -   *Immigration Violators with pending criminal charges entered into ICE system of record at the time of ICE custody.*\
+-   *Other Immigration Violators:*
+    -   *Immigration Violators without any known or a criminal conviction, or pending charges entered into ICE system of record at the time of ICE custody.*
+
+ICE reduces these three categories into two for their facility reporting: "Criminal" and "Non-Criminal". ICE does not clearly explain its method for disaggregating criminality in ICE Detention Statistics documentation. Comparing percentages across other ICE reporting metrics suggests that ICE includes people with Pending Criminal Charges as part of the "Non-Criminal" category for reporting purposes.
+
+\*Due to rounding, summing the Gender and Criminal Status totals may not equal the facility's aggregate Interval ADP. Please refer to the [notes](https://detentionreports.com/notes.html) page for more information.
+:::
+
+[*Back to Detention Reports*](https://detentionreports.com/)
+
+------------------------------------------------------------------------
+
+::: {style="text-align: center; color: #666; font-size: 0.9em; margin-top: 3rem;"}
+<em>Report generated on `r format(Sys.Date(), "%B %d, %Y")` using ICE Integrated Decision Support (IIDS) interval ADP data from December 11, 2025</em>
+
+Developed by [Relevant Research](https://relevant-research.com/). For information about the methodology behind Interval ADP, [click here](https://relevant-research.com/work).
+:::
