@@ -416,7 +416,7 @@ async function loadFacilities() {
     // Show notes link if notes entry exists
     const notesLink = document.getElementById("notesLink");
     if (notesEntry && notesLink) {
-      notesLink.href = `${ROOT}facility/${notesEntry.filename}`;
+      notesLink.href = `${FACILITY_DIR}${notesEntry.filename}`;
       notesLink.style.display = "inline-flex";
     }
 
